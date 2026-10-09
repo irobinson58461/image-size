@@ -17,3 +17,10 @@ The trade-off: only formats with a deterministic, bounded header are supported. 
 ## The awkward edge
 
 For PNG, GIF, and BMP the header is small and at a fixed offset, so a buffer of a few dozen bytes always suffices. JPEG is different: the frame marker that carries the dimensions can sit after an arbitrary run of APP/COM segments, so a buffer that holds the whole file for some inputs may be too short for others. When `imageSize` cannot find dimensions in a JPEG, the thrown `Error` carries a `bytesNeeded` property — load at least that many bytes from the start of the file and retry. The same property appears on the "too short to sniff" error, where it is always 8.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
