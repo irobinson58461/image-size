@@ -1,6 +1,6 @@
 {
   "name": "image-size",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Get width and height from image files, no full decode needed.",
   "type": "module",
   "main": "src/index.js",
